@@ -57,9 +57,11 @@ ssize_t onebyte_write(struct file *filep, const char *buf,
 size_t count, loff_t *f_pos)
 {
 /*please complete the function on your own*/
-char *tmp;
-tmp = buf + count -1;
-raw_copy_from_user(onebyte_data,tmp,1);
+raw_copy_from_user(onebyte_data,buf,1);
+if(count>1){
+    printk(KERN_ERR "MORE THAN 1 CHARS");
+    return -ENOSPC;
+}
 
 if(*f_pos == 0)
 {
